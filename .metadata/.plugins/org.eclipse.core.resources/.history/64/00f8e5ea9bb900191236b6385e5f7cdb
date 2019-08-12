@@ -1,0 +1,46 @@
+package com.user.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.user.User;
+import com.user.dao.UserDao;
+/**
+   *   用户退出Servlet
+ * 
+ * @author wbs
+ */
+public class ExitServlet extends HttpServlet {
+	private static final long serialVersionUID = 1599366365079846238L;
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 获取用户名
+		String username = request.getParameter("username");
+		// 获取密码
+		//String password = request.getParameter("password");
+		// 实例化UserDao对象
+		UserDao userDao = new UserDao();
+		if(username != null && !username.isEmpty()){
+			if(userDao.userIsExist(username)){  //判断数据库里面是否为空
+				User user = new User();
+				//user.setUsername(username);	
+				// 根据用户密码查询用户
+				userDao.deleteUser(user);
+				if(user = null){
+					// 将用户对象逐出session
+					session.removeAttribute("user");
+					// 设置提示信息
+					request.setAttribute("info", user.getUsername() + " 已成功删除！");
+				}
+				// 转发到message.jsp页面
+				request.getRequestDispatcher("message.jsp").forward(request, response);
+			}
+		}
+	}
+
+}
+

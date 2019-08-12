@@ -1,0 +1,23 @@
+package com.user.dao;
+
+import com.user.User;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("测试系统——START");
+		UserDao ud = new UserDao();
+		User u = new User();
+		u.setUsername("333");
+		u.setPassword("333");
+		u.setSex("男");
+		u.setTel("3333");
+		u.setEmail("3333");
+		System.out.println("测试系统——START");
+		u.setPhoto("1234");
+		
+		ud.saveUser(u);
+	}
+
+}

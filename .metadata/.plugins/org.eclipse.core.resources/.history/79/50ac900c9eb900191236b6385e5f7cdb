@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html" pageEncoding="GBK"%>
+<%@ page import="com.user.User" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>É¾³ýÓÃ»§ÐÅÏ¢</title>
+</head>
+<body>
+<body>
+	<div align="center">
+		<div class="div1">
+			<div class="top">ÌáÊ¾ÐÅÏ¢</div>
+			<div class="bottom">
+				<div class="div2">
+					<ul>
+						<li><a href="reg.jsp">ÓÃ»§×¢²á</a></li>
+						<li><a href="login.jsp">ÓÃ»§µÇÂ¼</a></li>
+						<li><a href="message.jsp">µ±Ç°ÓÃ»§</a></li>
+						<li><a href="ExitServlet">ÓÃ»§ÍË³ö</a></li>
+					</ul>
+				</div>
+				<div class="div3">
+					<form action="QueryServlet">
+					<table>
+					  <tr>
+					     <td>ÕˆÝ”ÈëÓÃ‘ôÃû£º<input type="text" name="qusername" value=""><input type="submit" value="²éÔƒ"></td>
+					     <td>ÕˆÝ”Èëµç»°£º<input type="text" name="qtel" value=""><input type="submit" value="²éÔƒ"></td>
+					  </tr>
+					</table>
+					</form>
+					<% 
+					        List<User> userList = new ArrayList<User>() ;
+					
+					        if(session.getAttribute("userList")!=null){					        	
+					        	userList=(ArrayList)session.getAttribute("userList");
+					        }
+					
+					        if(userList.size()>0){
+					        %>
+					     <table align="center" width="350" border="1" height="200"
+						bordercolor="#E8F4CC">   
+					     <tr>
+							<td align="center"><span style="font-weight: bold; font-size: 18px;">ÓÃ‘ôÃû</td>
+				     		<td align="center"><span style="font-weight: bold; font-size: 18px;">ÃÜ´a</td>
+						</tr>
+					      <%
+					      
+					      Iterator<User> iter = userList.iterator();
+							//±éÀúÊä³öËùÓÐÓÃ»§ÐÅÏ¢
+							while(iter.hasNext()) {
+								User user = iter.next();
+								 %>    
+						<tr>
+							<td align="center"><span style="font-weight: bold; font-size: 18px;"><%=user.getUsername()%></td>
+				     		<td align="center"><span style="font-weight: bold; font-size: 18px;"><%=user.getPassword()%></td>
+						</tr>
+								 <%
+							}
+								
+							%>
+								</table>	
+							<%
+							}
+					      
+					      %>    
+					        		
+						
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

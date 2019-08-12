@@ -1,0 +1,129 @@
+<%@ page language="java" contentType="text/html" pageEncoding="GBK" import="java.util.*"%>
+<%@ page import="com.user.User"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>用戶信息列表</title>
+<link rel="stylesheet" type="text/css" href="images/styles.css">
+<script>
+function SelectAll() {
+ var checkboxs=document.getElementsByName("id");
+ for (var i=0;i<checkboxs.length;i++) {
+  var e=checkboxs[i];
+  e.checked=!e.checked;
+ }
+}
+
+function clearForm(){
+	document.queryForm.qusername.value="";	
+}
+
+function delSelectAll() {
+	 var checkboxs=document.getElementsByName("id");
+	 var ids="";
+	 var flag=true;
+	 for (var i=0;i<checkboxs.length;i++) {
+		  var e=checkboxs[i];
+		  if(e.checked){
+			  flag=false;
+			  ids=ids+","+e.value;
+		  }
+	  }
+	 
+	 if(flag){
+		 alert("请选择删除记录！");
+	 }else{
+		var form = document.getElementById('delForm');
+		document.delForm.ids.value=ids;
+		document.delForm.action="DeleServlet?ids="+document.delForm.ids.value;	
+		form.submit();
+	 }
+	}
+</script>
+</head>
+<%      
+		// 保留输入框信息
+		String qusername = "";
+        if(request.getAttribute("qusername")!=null){
+        	qusername =(String)request.getAttribute("qusername");
+        }
+        // 获取提示信息
+		String info = (String)session.getAttribute("info");
+    	// 如果提示信息不为空，则输出提示信息
+		if(info != null){
+			out.println("<script type=text/javascript>");
+			out.println("alert('"+info+"')");
+			out.println("</script>");
+			//session.setAttribute("info", null);
+		}
+%>
+<body>
+	<div align="center">
+		<div class="div1">
+					<div class="top">用户列表信息</div>
+					<form action="QueryServlet" name="delForm" id="delForm">
+					<input type="hidden" name="ids" value="">
+					</form>
+					<form action="QueryServlet" name="queryForm" id="queryForm">
+					<table>
+					  <tr>
+					     <td>請輸入用戶名：<input type="text" name="qusername" value="<%=qusername%>"> 
+					     <input type="submit" value="查詢"> 
+					     <input type="button" value="清空" onclick="clearForm()">  
+					     <input type="button" value="删除" onclick="delSelectAll()"> 
+					     <input type="button" value="增加" onclick="window.location.href='reg.jsp'">
+					     </td>
+					  </tr>
+					</table>
+					</form>
+					<% 
+					        List<User> userList = new ArrayList<User>() ;
+					
+					        if(session.getAttribute("userList")!=null){					        	
+					        	userList=(ArrayList)session.getAttribute("userList");
+					        }
+					
+					        if(userList.size()>0){
+					        %>
+					        			        
+                  <table width="840" height="182" border="0" cellpadding="0" cellspacing="0" bordercolor="#99FFFF">
+
+					     <tr>
+						    <td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b><input type="checkbox" ame="allChecked" id="allChecked" onclick="SelectAll()"></b> </td>					     
+						    <td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>用戶ID</b> </td>					     
+							<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>用戶名</b> </td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>密碼</b> </td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>电话</b> </td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>邮箱</b> </td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>修改</b> </td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"> <b>刪除</b> </td>
+						</tr>
+					      <%
+					      
+					      Iterator<User> iter = userList.iterator();
+							//遍历输出所有用户信息
+							while(iter.hasNext()) {
+								User user = iter.next();
+								 %>    
+						<tr>							
+						    <td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><input type="checkbox" name="id" value="<%=user.getId()%>"></td>						
+						    <td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><%=user.getId()%></td>						
+							<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><%=user.getUsername()%></td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><%=user.getPassword()%></td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><%=user.getTel()%></td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><%=user.getEmail()%></td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><a href="QueryUserServlet?id=<%=user.getId()%>">修改</a></td>
+				     		<td style="BORDER-BOTTOM: #99CCFF 1px dashed;BORDER-top: #99CCFF 1px dashed;BORDER-left: #99CCFF 1px dashed;BORDER-right:#99CCFF 1px dashed" align="center"><a href="DeleteServlet?id=<%=user.getId()%>">刪除</a></td>
+						</tr>
+								 <%
+							}
+								
+							%>
+								</table>
+							<%
+							}
+					      %>    
+				</div>
+			</div>
+</body>
+</html>

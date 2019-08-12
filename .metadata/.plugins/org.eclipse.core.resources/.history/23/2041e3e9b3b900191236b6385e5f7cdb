@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- 用户注册 -->
+	<servlet>
+		<servlet-name>RegServlet</servlet-name>
+		<servlet-class>com.user.servlet.RegServlet</servlet-class>
+	</servlet>
+	<!-- 用户登录 -->
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.user.servlet.LoginServlet</servlet-class>
+	</servlet>
+	<!-- 用户退出 -->
+	<servlet>
+		<servlet-name>ExitServlet</servlet-name>
+		<servlet-class>com.user.servlet.ExitServlet</servlet-class>
+	</servlet>
+	<!-- 用户查询 -->
+	<servlet>
+		<servlet-name>QueryServlet</servlet-name>
+		<servlet-class>com.user.servlet.QueryServlet</servlet-class>
+	</servlet>
+	<!-- 用户删除 -->
+	<servlet>
+		<servlet-name>DeleteServlet</servlet-name>
+		<servlet-class>com.user.servlet.DeleteServlet</servlet-class>
+	</servlet>
+	<!-- 用户修改 -->
+	<servlet>
+		<servlet-name>EditServlet</servlet-name>
+		<servlet-class>com.user.servlet.EditServlet</servlet-class>
+	</servlet>
+	<!-- Servlet映射 -->
+	<servlet-mapping>
+		<servlet-name>EditServlet</servlet-name>
+		<url-pattern>/EditServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DeleteServlet</servlet-name>
+		<url-pattern>/DeleteServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>QueryServlet</servlet-name>
+		<url-pattern>/QueryServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RegServlet</servlet-name>
+		<url-pattern>/RegServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ExitServlet</servlet-name>
+		<url-pattern>/ExitServlet</url-pattern>
+	</servlet-mapping>
+	<!-- 过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.user.code.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>GBK</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	<!-- 主页 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
